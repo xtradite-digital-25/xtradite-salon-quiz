@@ -3,6 +3,30 @@ let currentQuestion = 0;
 let answers = {};
 const totalQuestions = 10;
 
+// Capture UTM parameters from the query string
+const utmParams = (() => {
+    const params = new URLSearchParams(window.location.search);
+    const utms = {};
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(key => {
+        if (params.has(key)) {
+            utms[key] = params.get(key);
+        }
+    });
+    return utms;
+})();
+
+// Store tracking information
+const trackingData = [];
+
+function trackAnswer(questionIndex, answerValue) {
+    trackingData.push({
+        question: questionIndex,
+        answer: answerValue,
+        utms: utmParams
+    });
+    console.log('Tracked answer:', trackingData[trackingData.length - 1]);
+}
+
 const packages = {
     'A': {
         name: 'Package A: Lean Solo Operator',
@@ -80,6 +104,7 @@ const packages = {
 
 function selectOption(value) {
     answers[currentQuestion] = value;
+    trackAnswer(currentQuestion, value);
 
     // Visual feedback
     document.querySelectorAll('.question-card.active .option-button').forEach(btn => {
@@ -172,6 +197,7 @@ function calculateResult() {
 
 function showResults() {
     const result = calculateResult();
+    trackAnswer('result', result);
     const pkg = packages[result];
 
     document.getElementById('quiz-container').style.display = 'none';
