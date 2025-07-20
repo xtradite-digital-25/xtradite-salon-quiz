@@ -4,7 +4,11 @@ This repository contains a self‑contained quiz that recommends a technology st
 
 ## Running Locally
 
-Open `index.html` in any modern browser. No build step is required.
+Open `index.html` in any modern browser. No build step is required. If the page
+is loaded with common UTM parameters (e.g. `utm_source`, `utm_medium` and
+`utm_campaign`), these values will be stored and logged in the console whenever a
+quiz option is selected. This allows lightweight tracking of how users arrived at
+the quiz.
 
 ## Embedding or Hosting
 
