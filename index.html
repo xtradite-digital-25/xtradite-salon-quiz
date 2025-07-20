@@ -4,25 +4,238 @@
     <meta charset="UTF-8">
     <title>Salon Tech Stack Quiz</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <div id="quiz-content">
-            <!-- Quiz content injected here -->
+<body class="bg-gray-50">
+<div class="container mx-auto p-4">
+    <!-- Progress Bar -->
+    <div class="mb-8">
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-gray-600">Progress</span>
+            <span class="text-sm font-medium text-gray-600" id="progress-text">0/10</span>
         </div>
-        <div id="results" class="hidden">
-            <div class="result-card">
-                <div class="text-center">
-                    <h2>Your Perfect Tech Stack!</h2>
-                    <div id="package-result"></div>
-                </div>
-                <div id="package-details"></div>
-                <div class="text-center">
-                    <button onclick="restartQuiz()">Take Quiz Again</button>
-                </div>
+        <div class="w-full bg-gray-200 rounded-full h-3">
+            <div class="progress-bar h-3 rounded-full" style="width: 0%; background-color: #fce93f;" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Quiz Container -->
+    <div class="relative overflow-hidden h-96" id="quiz-container">
+        <!-- Question 1 -->
+        <div class="question-card active bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="0">
+            <h2 class="text-2xl font-semibold text-black mb-6">What's your salon size/setup?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="option-button bg-gradient-to-r from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-purple-300" data-value="solo">
+                    <div class="font-semibold text-gray-800">🏠 Solo</div>
+                    <div class="text-sm text-gray-600 mt-1">Working independently</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-blue-300" data-value="small">
+                    <div class="font-semibold text-gray-800">👥 Small Team</div>
+                    <div class="text-sm text-gray-600 mt-1">2-5 stylists</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-green-100 to-teal-100 hover:from-green-200 hover:to-teal-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-green-300" data-value="large">
+                    <div class="font-semibold text-gray-800">🏢 Large</div>
+                    <div class="text-sm text-gray-600 mt-1">6+ stylists</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-orange-300" data-value="mobile">
+                    <div class="font-semibold text-gray-800">🚗 Mobile</div>
+                    <div class="text-sm text-gray-600 mt-1">Travel to clients</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="1">
+            <h2 class="text-2xl font-semibold text-black mb-6">How do you prefer to handle bookings?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="option-button bg-gradient-to-r from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-purple-300" data-value="dms">
+                    <div class="font-semibold text-gray-800">💬 DMs</div>
+                    <div class="text-sm text-gray-600 mt-1">Instagram/WhatsApp messages</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-blue-300" data-value="gcal">
+                    <div class="font-semibold text-gray-800">📅 Google Calendar</div>
+                    <div class="text-sm text-gray-600 mt-1">Simple calendar booking</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-green-100 to-teal-100 hover:from-green-200 hover:to-teal-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-green-300" data-value="platform">
+                    <div class="font-semibold text-gray-800">🖥️ Booking Platform</div>
+                    <div class="text-sm text-gray-600 mt-1">Professional booking system</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-gray-100 to-slate-100 hover:from-gray-200 hover:to-slate-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-gray-300" data-value="none">
+                    <div class="font-semibold text-gray-800">📞 None</div>
+                    <div class="text-sm text-gray-600 mt-1">Phone calls only</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="2">
+            <h2 class="text-2xl font-semibold text-black mb-6">What appointment logic do you need?</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <button class="option-button bg-gradient-to-r from-green-100 to-teal-100 hover:from-green-200 hover:to-teal-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-green-300" data-value="simple">
+                    <div class="font-semibold text-gray-800">✨ Simple</div>
+                    <div class="text-sm text-gray-600 mt-1">Basic time slots and availability</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-blue-300" data-value="team">
+                    <div class="font-semibold text-gray-800">👥 Team-based</div>
+                    <div class="text-sm text-gray-600 mt-1">Multiple stylists, different schedules</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-purple-300" data-value="pos">
+                    <div class="font-semibold text-gray-800">💳 POS Integration</div>
+                    <div class="text-sm text-gray-600 mt-1">Connected to point-of-sale system</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="3">
+            <h2 class="text-2xl font-semibold text-black mb-6">How do you communicate with clients?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="option-button bg-gradient-to-r from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-purple-300" data-value="dms">
+                    <div class="font-semibold text-gray-800">💬 DMs</div>
+                    <div class="text-sm text-gray-600 mt-1">Social media messages</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-blue-300" data-value="email">
+                    <div class="font-semibold text-gray-800">📧 Email</div>
+                    <div class="text-sm text-gray-600 mt-1">Professional email communication</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-green-100 to-teal-100 hover:from-green-200 hover:to-teal-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-green-300" data-value="automation">
+                    <div class="font-semibold text-gray-800">🤖 Automation</div>
+                    <div class="text-sm text-gray-600 mt-1">Automated reminders & follow-ups</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="4">
+            <h2 class="text-2xl font-semibold text-black mb-6">What's your ecommerce readiness?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="option-button bg-gradient-to-r from-gray-100 to-slate-100 hover:from-gray-200 hover:to-slate-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-gray-300" data-value="none">
+                    <div class="font-semibold text-gray-800">❌ None</div>
+                    <div class="text-sm text-gray-600 mt-1">Services only</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-orange-300" data-value="salon">
+                    <div class="font-semibold text-gray-800">🏪 In-salon only</div>
+                    <div class="text-sm text-gray-600 mt-1">Sell products during appointments</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-blue-300" data-value="webshop">
+                    <div class="font-semibold text-gray-800">🛒 Full webshop</div>
+                    <div class="text-sm text-gray-600 mt-1">Online store with inventory</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-green-100 to-teal-100 hover:from-green-200 hover:to-teal-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-green-300" data-value="dropship">
+                    <div class="font-semibold text-gray-800">📦 Dropship</div>
+                    <div class="text-sm text-gray-600 mt-1">No inventory management</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="5">
+            <h2 class="text-2xl font-semibold text-black mb-6">Do you offer virtual consults/events?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button class="option-button bg-gradient-to-r from-green-100 to-teal-100 hover:from-green-200 hover:to-teal-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-green-300" data-value="yes">
+                    <div class="font-semibold text-gray-800">✅ Yes</div>
+                    <div class="text-sm text-gray-600 mt-1">Already doing virtual sessions</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-orange-300" data-value="maybe">
+                    <div class="font-semibold text-gray-800">🤔 Maybe</div>
+                    <div class="text-sm text-gray-600 mt-1">Interested in trying</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-red-100 to-pink-100 hover:from-red-200 hover:to-pink-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-red-300" data-value="no">
+                    <div class="font-semibold text-gray-800">❌ No</div>
+                    <div class="text-sm text-gray-600 mt-1">In-person only</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="6">
+            <h2 class="text-2xl font-semibold text-black mb-6">What's your marketing focus?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="option-button bg-gradient-to-r from-pink-100 to-rose-100 hover:from-pink-200 hover:to-rose-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-pink-300" data-value="social">
+                    <div class="font-semibold text-gray-800">📱 Social</div>
+                    <div class="text-sm text-gray-600 mt-1">Instagram, TikTok content</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-blue-300" data-value="retention">
+                    <div class="font-semibold text-gray-800">🔄 Retention</div>
+                    <div class="text-sm text-gray-600 mt-1">Keep existing clients happy</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-green-100 to-teal-100 hover:from-green-200 hover:to-teal-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-green-300" data-value="growth">
+                    <div class="font-semibold text-gray-800">📈 Growth</div>
+                    <div class="text-sm text-gray-600 mt-1">Expand client base</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-purple-100 to-violet-100 hover:from-purple-200 hover:to-violet-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-purple-300" data-value="automation">
+                    <div class="font-semibold text-gray-800">🤖 Automation</div>
+                    <div class="text-sm text-gray-600 mt-1">Automated marketing flows</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="7">
+            <h2 class="text-2xl font-semibold text-black mb-6">What's your ideal client journey?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="option-button bg-gradient-to-r from-green-100 to-teal-100 hover:from-green-200 hover:to-teal-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-green-300" data-value="lightweight">
+                    <div class="font-semibold text-gray-800">🪶 Lightweight</div>
+                    <div class="text-sm text-gray-600 mt-1">Simple, quick interactions</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-purple-300" data-value="branded">
+                    <div class="font-semibold text-gray-800">✨ Fully Branded</div>
+                    <div class="text-sm text-gray-600 mt-1">Premium, cohesive experience</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="8">
+            <h2 class="text-2xl font-semibold text-black mb-6">What's your digital confidence level?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="option-button bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-orange-300" data-value="handsoff">
+                    <div class="font-semibold text-gray-800">🙋‍♀️ Hands-off</div>
+                    <div class="text-sm text-gray-600 mt-1">Want someone else to manage</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-blue-300" data-value="control">
+                    <div class="font-semibold text-gray-800">🎮 Full Control</div>
+                    <div class="text-sm text-gray-600 mt-1">Want to manage everything myself</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question-card bg-white rounded-2xl shadow-lg p-8 absolute inset-0" data-question="9">
+            <h2 class="text-2xl font-semibold text-black mb-6">How important is marketplace presence?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button class="option-button bg-gradient-to-r from-red-100 to-pink-100 hover:from-red-200 hover:to-pink-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-red-300" data-value="essential">
+                    <div class="font-semibold text-gray-800">🔥 Essential</div>
+                    <div class="text-sm text-gray-600 mt-1">Need Treatwell/Fresha visibility</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-orange-300" data-value="optional">
+                    <div class="font-semibold text-gray-800">🤷‍♀️ Optional</div>
+                    <div class="text-sm text-gray-600 mt-1">Nice to have but not critical</div>
+                </button>
+                <button class="option-button bg-gradient-to-r from-gray-100 to-slate-100 hover:from-gray-200 hover:to-slate-200 p-6 rounded-xl text-left border-2 border-transparent hover:border-gray-300" data-value="notneeded">
+                    <div class="font-semibold text-gray-800">❌ Not Needed</div>
+                    <div class="text-sm text-gray-600 mt-1">Direct bookings only</div>
+                </button>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Results Section -->
+    <div id="results" class="hidden">
+        <div class="result-card bg-white rounded-2xl shadow-lg p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-black mb-4">🎉 Your Perfect Tech Stack!</h2>
+                <div id="package-result" class="text-xl font-semibold text-purple-600 mb-4"></div>
+            </div>
+            <div id="package-details" class="space-y-6"></div>
+            <div class="mt-8 text-center">
+                <button onclick="restartQuiz()" class="text-black font-semibold py-3 px-8 rounded-xl transition-all duration-200 hover:shadow-lg border-2 border-black hover:bg-gray-100" style="background-color: #fce93f;">
+                    Take Quiz Again
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
